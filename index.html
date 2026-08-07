@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>热门视频 · 抖音/B站每日热榜</title>
+  <meta name="description" content="每天自动抓取抖音热榜前 20 与哔哩哔哩热门视频前 10，点击直达对应 App 观看。">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="热门视频">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M8 5.5v13l11-6.5z" fill="#fff"/>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <h1>热门视频</h1>
+        <p>抖音热榜 · B站热门</p>
+      </div>
+    </div>
+    <button id="installBtn" class="btn-ghost" hidden>安装 App</button>
+    <button id="refreshBtn" class="icon-btn" type="button" title="刷新" aria-label="刷新">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>
+      </svg>
+    </button>
+  </header>
+
+  <nav class="tabs" id="tabs" role="tablist">
+    <button class="tab active" role="tab" aria-selected="true" data-platform="douyin">
+      抖音热榜<span class="tab-badge">前 20</span>
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-platform="bilibili">
+      B站热门<span class="tab-badge">前 10</span>
+    </button>
+  </nav>
+
+  <main class="main">
+    <div id="status" class="status" hidden></div>
+    <div id="list" class="list" aria-live="polite"></div>
+  </main>
+
+  <details class="help">
+    <summary>📱 添加到主屏幕 / 桌面，当 App 用</summary>
+    <ul>
+      <li><b>iPhone / iPad（Safari）</b>：打开本页面 → 点底部「分享」按钮 → 「添加到主屏幕」。</li>
+      <li><b>Android（Chrome / 浏览器）</b>：打开本页面 → 菜单「⋮」→ 「安装应用」或「添加到主屏幕」；满足条件时页面顶部会出现「安装 App」按钮。</li>
+      <li><b>电脑（Chrome/Edge）</b>：地址栏右侧点「安装」图标，即可作为桌面应用打开。</li>
+      <li>安装后可离线打开，点击任意卡片会自动跳转到<b>抖音 / B站 App</b> 观看视频。</li>
+    </ul>
+  </details>
+
+  <footer class="footer">
+    <p id="updateInfo">—</p>
+    <p class="foot-note">数据来自公开接口，仅供个人学习参考；点击卡片即跳转对应 App 查看</p>
+  </footer>
+
+  <script src="lib/normalize.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

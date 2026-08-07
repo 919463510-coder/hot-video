@@ -1,0 +1,45 @@
+name: 每日热门快照
+
+on:
+  push:
+    branches: [main, master]
+  schedule:
+    # 每天 22:00 UTC = 北京时间次日 06:00
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-snapshot
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 抓取每日热门快照
+        run: node scripts/fetch-snapshot.cjs
+
+      - name: 提交并推送快照
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: 每日热门快照 $(date -u +'%Y-%m-%d')"
+            git push
+            echo "✅ 已提交每日快照"
+          else
+            echo "ℹ️ 数据无变化，跳过提交"
+          fi
